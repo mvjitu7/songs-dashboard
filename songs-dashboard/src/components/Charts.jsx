@@ -62,12 +62,44 @@ const Charts = ({ songs }) => {
     };
 
     // Data for Duration Histogram
+    // Define the bins
+    const durationBins = [
+        { label: '0-60 sec', min: 0, max: 60 },
+        { label: '60-120 sec', min: 60, max: 120 },
+        { label: '120-180 sec', min: 120, max: 180 },
+        { label: '180-240 sec', min: 180, max: 240 },
+        { label: '240-300 sec', min: 240, max: 300 },
+        { label: '300-360 sec', min: 300, max: 360 },
+        { label: '360+ sec', min: 360, max: Infinity },
+    ];
+
+    // Initialize counts for each bin
+    const durationCounts = durationBins.map(() => 0);
+
+    // Count the number of songs in each bin
+    if (hasSongs) {
+        songs.forEach(song => {
+            const durationSec = song.duration_ms / 1000;
+            for (let i = 0; i < durationBins.length; i++) {
+                const bin = durationBins[i];
+                if (durationSec >= bin.min && durationSec < bin.max) {
+                    durationCounts[i]++;
+                    break;
+                } else if (bin.max === Infinity && durationSec >= bin.min) {
+                    durationCounts[i]++;
+                    break;
+                }
+            }
+        });
+    }
+
+    // Prepare data for the histogram
     const durationHistogram = {
-        labels: songTitles,
+        labels: durationBins.map(bin => bin.label),
         datasets: [
             {
-                label: 'Duration (seconds)',
-                data: hasSongs ? songs.map((song) => song.duration_ms / 1000) : [],
+                label: 'Number of Songs',
+                data: durationCounts,
                 backgroundColor: 'rgba(153, 102, 255, 0.6)',
             },
         ],
@@ -92,8 +124,8 @@ const Charts = ({ songs }) => {
 
     return (
         <div>
-            <h2>Danceability vs Energy Scatter Plot</h2>
-            <div style={{ height: '400px', width: '100%' }}>
+            <h2 className="my-5">Danceability vs Energy Scatter Plot</h2>
+            <div style={{ height: '520px', width: '100%' }}>
                 {hasSongs ? (
                     <Scatter data={danceabilityData} options={scatterOptions} />
                 ) : (
@@ -101,8 +133,8 @@ const Charts = ({ songs }) => {
                 )}
             </div>
 
-            <h2>Duration Histogram</h2>
-            <div style={{ height: '400px', width: '100%' }}>
+            <h2 className="my-5">Duration Histogram</h2>
+            <div style={{ height: '520px', width: '100%' }}>
                 {hasSongs ? (
                     <Bar data={durationHistogram} options={commonChartOptions} />
                 ) : (
@@ -110,8 +142,8 @@ const Charts = ({ songs }) => {
                 )}
             </div>
 
-            <h2>Acousticness and Tempo Bar Chart</h2>
-            <div style={{ height: '400px', width: '100%' }}>
+            <h2 className="my-5">Acousticness and Tempo Bar Chart</h2>
+            <div className="mb-5" style={{ height: '520px', width: '100%' }}>
                 {hasSongs ? (
                     <Bar data={acousticsTempoBar} options={commonChartOptions} />
                 ) : (
@@ -123,4 +155,3 @@ const Charts = ({ songs }) => {
 };
 
 export default Charts;
-
