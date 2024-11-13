@@ -31,9 +31,6 @@ def apply_sorting(queryset, sort_key, sort_direction):
     else:
         return queryset.order_by(sort_field.asc())
 
-# Serializer for rating
-#class RatingSerializer(serializers.Serializer):
-    #rating = serializers.IntegerField(min_value=1, max_value=5)
 
 @api_view(['GET'])
 def get_all_songs(request):
