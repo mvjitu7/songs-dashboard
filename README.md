@@ -19,7 +19,7 @@ A full-stack music project built with Django for the backend and React for the f
 
 ```plaintext
 songs-dashboard/
-├── env/                          # Virtual environment (should not be committed to GitHub)
+├── env/                          # Virtual environment 
 ├── songs_project/                # Backend (Django)
 │   ├── manage.py
 │   ├── db.sqlite3                # SQLite database (for development)
@@ -39,7 +39,7 @@ songs-dashboard/
     │   │   └── SongsTable.jsx
     │   ├── App.js                # Main App component
     │   ├── index.js              # React entry point
-    │   └── setupTests.js         # Testing setup for React
+    │   
     ├── package.json              # Node dependencies for the frontend
     └── .gitignore
 ```
@@ -57,7 +57,7 @@ songs-dashboard/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/songs-dashboard.git
+git clone https://github.com/mvjitu7/songs-dashboard.git
 cd songs-dashboard
 ```
 
