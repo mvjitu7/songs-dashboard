@@ -3,12 +3,12 @@ from django.db.models.functions import Lower
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
-from rest_framework import status, serializers
+from rest_framework import status
 from .models import Song
 from .serializers import SongSerializer, RatingSerializer
 
 # Helper functions
-def get_pagination_metadata(paginator, page):
+def get_pagination_metadata(page):
     return {
         'total_records': page.paginator.count,
         'current_page': page.number,
@@ -62,7 +62,7 @@ def get_all_songs(request):
 
     return Response({
         'data': serializer.data,
-        'pagination': get_pagination_metadata(paginator, paginator.page)
+        'pagination': get_pagination_metadata(paginator.page)
     })
 
 @api_view(['PATCH'])
