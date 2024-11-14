@@ -8,7 +8,7 @@ const App = () => {
    useEffect(() => {
        const loadSongs = async () => {
            const response = await fetchSongs();
-           setSongs(response.data.results);
+           setSongs(response.data.data);
        };
        loadSongs();
    }, []);
